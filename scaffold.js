@@ -14,7 +14,7 @@ request(url, function(e, res, body) {
 });
 
 const dest = fs.createWriteStream('./Downloads/index.html');
-request(url).pipe(dest);
+request(url).pipe(dest).on('finish', () => console.log('Done'));
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => console.log(`Listening on ${port}...`));
