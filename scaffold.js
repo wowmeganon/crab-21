@@ -6,10 +6,15 @@ const cheerio = require('cheerio');
 const fs = require('fs');
 const app = express();
 
-request('http://google.com', function(e, res, body) {
+const url = 'http://google.com';
+
+request(url, function(e, res, body) {
   if(e) console.log('Error:', e);
   console.log(body);
-})
+});
+
+const dest = fs.createWriteStream('./Downloads/index.html');
+request(url).pipe(dest);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => console.log(`Listening on ${port}...`));
