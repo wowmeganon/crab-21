@@ -6,7 +6,7 @@ const cheerio = require('cheerio');
 const fs = require('fs');
 const app = express();
 
-const url = process.env.URL || 'http://www.google.com';
+const url = process.env.NODE_URL || 'http://www.google.com';
 
 request(url, function(e, res, body) {
   if(e) console.log('Error:', e);
