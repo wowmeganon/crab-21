@@ -10,7 +10,10 @@ const url = process.env.NODE_URL || 'http://www.google.com';
 
 request(url, function(e, res, body) {
   if(e) console.log('Error:', e);
-  console.log(body);
+
+  const $ = cheerio.load(body);
+  const about = $('.about');
+  console.log(about);
 });
 
 const dest = fs.createWriteStream('./Downloads/index.html');
