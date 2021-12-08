@@ -16,7 +16,7 @@ request(url, function(e, res, body) {
   console.log(about);
 });
 
-const dest = fs.createWriteStream('./Downloads/index.html');
+const dest = fs.createWriteStream('./index.html');
 request(url).pipe(dest).on('finish', () => console.log('Done'));
 
 const port = process.env.PORT || 8000;
