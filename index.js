@@ -12,12 +12,14 @@ async function main() {
     const $ = await cheerio.load(html);
 
     $('[itemprop="itemListElement"]').each(function(index,element) {
-      const result = $(element).children('[itemprop="name"]');
+      let result = $(element).children('[itemprop="name"]');
       const title = result.text();
       const url = result.attr('href');
 
-      results.push({ title, url });
+      result = { tiltle, url };
+      results.push(result);
     });
+    console.log(result);
 
   } catch(err) { console.error(`Error: ${err}`) }
 }
