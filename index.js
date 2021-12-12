@@ -10,16 +10,19 @@ async function main() {
     const html = await request.get(url);
     const $ = await cheerio.load(html);
 
-  $('.caption').each((index, element) => {
-    const caption = $(element);
-    const name = caption.children('h4').children('a.title').text();
-    const price = caption.children('h4.price').text();
+  $('.thumbnail').each((index, element) => {
+    const caption = $(element).children('.caption');
+    const price = caption.children('.price').text();
+    const name = caption.children('h4').children('.title').text();
     const desc = caption.children('.description').text();
 
-    console.log(`
-      Name: ${name}
-      Price: ${price}
-      Description: ${desc}`);
+    const rating = $(element).children('.ratings');
+    const review = rating.children('p.pull-right').text();
+    const star = rating.children('p').attr('[data-rating]');
+
+    const result = { name, price, desc, review, star };
+    results.push(result);
+    console.log(result);
   });
 
 }
