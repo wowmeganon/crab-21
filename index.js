@@ -7,20 +7,20 @@ const url = process.env.NODE_URL;
 const results = [];
 
 async function main() {
-  try {
     const html = await request.get(url);
     const $ = await cheerio.load(html);
 
-    $('[itemprop="itemListElement"]').each(function(index,element) {
-      let result = $(element).children('[itemprop="name"]');
-      const title = result.text();
-      const url = result.attr('href');
+  $('.caption').each((index, element) => {
+    const caption = $(element);
+    const name = caption.children('h4').children('a.title').text();
+    const price = caption.children('h4.price').text();
+    const desc = caption.children('.description').text();
 
-      result = { tiltle, url };
-      results.push(result);
-    });
-    console.log(result);
+    console.log(`
+      Name: ${name}
+      Price: ${price}
+      Description: ${desc}`);
+  });
 
-  } catch(err) { console.error(`Error: ${err}`) }
 }
 main();
