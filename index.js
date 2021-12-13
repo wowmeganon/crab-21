@@ -13,12 +13,12 @@ async function main() {
   $('.thumbnail').each((index, element) => {
     const caption = $(element).children('.caption');
     const price = caption.children('.price').text();
-    const name = caption.children('h4').children('.title').text();
+    const name = caption.find('.title').text();
     const desc = caption.children('.description').text();
 
     const rating = $(element).children('.ratings');
     const review = rating.children('p.pull-right').text();
-    const star = rating.children('p').attr('[data-rating]');
+    const star = rating.children('p').attr('data-rating');
 
     const result = { name, price, desc, review, star };
     results.push(result);
