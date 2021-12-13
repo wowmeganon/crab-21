@@ -16,11 +16,18 @@ async function main() {
     const name = caption.find('.title').text();
     const desc = caption.children('.description').text();
 
+    let link = caption.find('.title').attr('href');
+    const getDomain = (url) => {
+        const matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
+        return matches && matches[1];
+    };
+    link = getDomain(url).concat(link);
+
     const rating = $(element).children('.ratings');
     const review = rating.children('p.pull-right').text();
     const star = rating.children('p').attr('data-rating');
 
-    const result = { name, price, desc, review, star };
+    const result = { name, price, desc, review, star, link };
     results.push(result);
     console.log(result);
   });
