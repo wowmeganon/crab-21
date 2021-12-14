@@ -33,9 +33,8 @@ async function getItems() {
     return results;
 }
 
-async function gotoItems() {
-    const items = await getItems();
-    await Promise.all(
+async function getDescriptions(items) {
+    return await Promise.all(
         await items.map(async (item) => {
             const html = await request.get(item.link);
             const $ = await cheerio.load(html);
@@ -50,7 +49,12 @@ async function gotoItems() {
             return item;
         })
     );
-    console.log(items);
 }
 
-gotoItems();
+async function crawlURL() {
+    const items = await getItems();
+    const data = await getDescriptions(items);
+    console.log(data);
+}
+
+crawlURL();
