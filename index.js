@@ -35,18 +35,22 @@ async function getItems() {
 
 async function gotoItems() {
     const items = await getItems();
-    await items.map(async (item) => {
-        const html = await request.get(item.link);
-        const $ = await cheerio.load(html);
+    await Promise.all(
+        await items.map(async (item) => {
+            const html = await request.get(item.link);
+            const $ = await cheerio.load(html);
 
-        $('.caption').each((i, caption) => {
-            results.description = $(caption).find('.description').text();
-        });
+            $('.caption').each((i, caption) => {
+                item.description = $(caption).find('.description').text();
+            });
 
-        $('.swatches').each((i, swatch) => {
-            results.memory = $(swatch).find('.btn-primary').text();
-        });
-    })
+            $('.swatches').each((i, swatch) => {
+                item.memory = $(swatch).find('.btn-primary').text();
+            });
+            return item;
+        })
+    );
+    console.log(items);
 }
 
 gotoItems();
