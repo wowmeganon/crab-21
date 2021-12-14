@@ -6,7 +6,7 @@ const url = process.env.NODE_URL;
 
 const results = [];
 
-async function main() {
+async function getItems() {
     const html = await request.get(url);
     const $ = await cheerio.load(html);
 
@@ -21,7 +21,7 @@ async function main() {
             const matches = url.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
             return matches && matches[1];
         };
-        link = getDomain(url).concat(link);
+        link = 'http://' +getDomain(url).concat(link);
 
         const rating = $(element).children('.ratings');
         const review = rating.children('p.pull-right').text();
@@ -32,4 +32,21 @@ async function main() {
     });
     return results;
 }
-main();
+
+async function gotoItems() {
+    const items = await getItems();
+    await items.map(async (item) => {
+        const html = await request.get(item.link);
+        const $ = await cheerio.load(html);
+
+        $('.caption').each((i, caption) => {
+            results.description = $(caption).find('.description').text();
+        });
+
+        $('.swatches').each((i, swatch) => {
+            results.memory = $(swatch).find('.btn-primary').text();
+        });
+    })
+}
+
+gotoItems();
