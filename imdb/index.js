@@ -15,7 +15,7 @@ async function getTopMovies() {
     let link = $(movie).find('.posterColumn > a').attr('href');
     link = 'http://www.imdb.com' +link;
 
-    return ({ title, year, rating, link });
+    return ({ title, year, rating, rank: i, link });
   }).get();
   console.log(movies);
 }
