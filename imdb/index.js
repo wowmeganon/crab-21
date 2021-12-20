@@ -17,7 +17,19 @@ async function getTopMovies() {
 
     return ({ title, year, rating, rank: i, link });
   }).get();
+  return movies;
+}
+
+async function getMoviesPoster() {
+  await Promise.all(movies.map(async (movie) => {
+
+  }))
+}
+
+async function main() {
+  let movies = await getTopMovies();
+  movies = await getMoviesPoster(movies);
   console.log(movies);
 }
 
-getTopMovies();
+main();
