@@ -1,7 +1,12 @@
 
+const http = require('http');
+const https = require('https');
 const request = require('request-promise');
 const cheerio = require('cheerio');
 const url = "http://www.imdb.com/chart/moviemeter/?ref_=nv_mv_mpm";
+
+http.globalAgent.maxSockets = 1;
+https.globalAgent.maxSockets = 5;
 
 async function getTopMovies() {
   const html = await request.get(url);
@@ -16,7 +21,7 @@ async function getTopMovies() {
     return (title ? { title, year, rating, rank: i, link } : null);
   }).get();
 
-  return movies;
+  return movies.splice(0, 10);
 }
 
 async function getMoviesPoster(movies) {
