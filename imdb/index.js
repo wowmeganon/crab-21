@@ -1,7 +1,9 @@
 
+const fs = require('fs');
 const http = require('http');
 const https = require('https');
-const request = require('request-promise');
+const req = require('request');
+const reqp = require('request-promise');
 const cheerio = require('cheerio');
 const url = "http://www.imdb.com/chart/moviemeter/?ref_=nv_mv_mpm";
 
@@ -9,7 +11,7 @@ http.globalAgent.maxSockets = 1;
 https.globalAgent.maxSockets = 5;
 
 async function getTopMovies() {
-  const html = await request.get(url);
+  const html = await reqp.get(url);
   const $ = await cheerio.load(html);
 
   const movies = $('tr').map((i, movie) => {
@@ -27,9 +29,10 @@ async function getTopMovies() {
 async function getMoviesPoster(movies) {
   const posters = await Promise.all(movies.map(async (movie) => {
     try {
-      const html = await request.get(movie.link);
+      const html = await reqp.get(movie.link);
       const $ = await cheerio.load(html);
       movie.poster = $('div').find('.ipc-media__img > img').attr('src');
+      req.get(movie.poster).pipe(fs.createWriteStream(`posters/${movie.rank}.jpg`));
       return movie;
     }
     catch(err) {
