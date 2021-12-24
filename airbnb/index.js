@@ -8,7 +8,6 @@ let browser, page;
 async function getHomes() {
   try {
     await page.goto(url, { waitUntil: "networkidle2" });
-
     const html = await page.evaluate(() => document.body.innerHTML);
     const $ = await cheerio.load(html);
 
@@ -23,7 +22,12 @@ async function getHomes() {
 
 async function getDescription(url) {
   try {
-    await page.goto(url);
+    await page.goto(url, { waitUntil: "networkidle2" });
+    const html = await page.evaluate(() => document.body.innerHTML);
+    const $ = await cheerio.load(html);
+
+    const blob = $('[data-section-id="OVERVIEW_DEFAULT"]').text();
+    console.log(blob);
   }
   catch(err) {
     console.error(err);
