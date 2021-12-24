@@ -13,6 +13,7 @@ async function getHomes() {
     const $ = await cheerio.load(html);
 
     const homes = $("[itemprop='url']").map((i, home) => $(home).attr('content')).get();
+    await browser.close();
     return homes;
   } catch(err) {
     console.error(err);
