@@ -31,7 +31,10 @@ async function getDescription(url) {
     const bedroom = blob.match(/\d+ bedroom/).slice(0,1).toString().match(/\d+/)[0];
     const bed = blob.match(/\d+ bed/).slice(0,1).toString().match(/\d+/)[0];
     const bath = blob.match(/\d+ (.*?) bath/).slice(0,1).toString().match(/\d+/)[0];
-    console.log({ guest, bedroom, bed, bath });
+
+    let price = $('#site-content > div > div:nth-child(1) > div:nth-child(3) > div > div > div > div > div:nth-child(1) > div > div > div > div > div > div > div > div > div:nth-child(1) > div > div > div > span');
+    price = price.text().toString().replace(/,/g, '').match(/\d+/)[0];
+    console.log({ price, guest, bedroom, bed, bath });
   }
   catch(err) {
     console.error(err);
