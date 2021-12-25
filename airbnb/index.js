@@ -27,7 +27,9 @@ async function getDescription(url) {
     const $ = await cheerio.load(html);
 
     const blob = $('[data-section-id="OVERVIEW_DEFAULT"]').text();
-    console.log(blob);
+    let guest = blob.match(/\d+ guest/);
+    guest = guest.slice(0,1).toString().match(/\d+/)[0];
+    console.log(guest);
   }
   catch(err) {
     console.error(err);
