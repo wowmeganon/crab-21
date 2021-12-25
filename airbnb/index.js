@@ -34,7 +34,7 @@ async function getDescription(url) {
 
     let price = $('#site-content > div > div:nth-child(1) > div:nth-child(3) > div > div > div > div > div:nth-child(1) > div > div > div > div > div > div > div > div > div:nth-child(1) > div > div > div > span');
     price = price.text().toString().replace(/,/g, '').match(/\d+/)[0];
-    console.log({ price, guest, bedroom, bed, bath });
+    return { price, guest, bedroom, bed, bath, url };
   }
   catch(err) {
     console.error(err);
@@ -46,7 +46,8 @@ async function main() {
   page = await browser.newPage();
   const homes = await getHomes(page);
   for(i=0; i <homes.length; i++) {
-    await getDescription(homes[i], page);
+    const description = await getDescription(homes[i], page);
+    console.log(description);
   }
 }
 
