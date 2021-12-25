@@ -27,9 +27,11 @@ async function getDescription(url) {
     const $ = await cheerio.load(html);
 
     const blob = $('[data-section-id="OVERVIEW_DEFAULT"]').text();
-    let guest = blob.match(/\d+ guest/);
-    guest = guest.slice(0,1).toString().match(/\d+/)[0];
-    console.log(guest);
+    const guest = blob.match(/\d+ guest/).slice(0,1).toString().match(/\d+/)[0];
+    const bedroom = blob.match(/\d+ bedroom/).slice(0,1).toString().match(/\d+/)[0];
+    const bed = blob.match(/\d+ bed/).slice(0,1).toString().match(/\d+/)[0];
+    const bath = blob.match(/\d+ (.*?) bath/).slice(0,1).toString().match(/\d+/)[0];
+    console.log({ guest, bedroom, bed, bath });
   }
   catch(err) {
     console.error(err);
