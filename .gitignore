@@ -5,3 +5,5 @@ Downloads/*
 NOTES.md
 test.js
 imdb/posters/
+twitch/
+playwright/node_modules/
